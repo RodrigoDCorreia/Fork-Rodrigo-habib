@@ -5,6 +5,11 @@ public class SimpleGA {
     Individual fittest;
     Individual secondFittest;
     int generationCount = 0;
+    int initial_Gen_fittest = 0;
+    int compare = 0;
+    int[] combo = new int[6];
+    int index = 0;
+    String[] item_backpack = new String[]{"Canivete","Corda","Tocha","Garrafa","Saco de dormir","Comida"};
 
     public static void main(String[] args) {
 
@@ -19,9 +24,9 @@ public class SimpleGA {
         demo.population.calculateFitness();
 
         System.out.println("Generation: " + demo.generationCount + " Fittest: " + demo.population.fittest);
-
+        demo.initial_Gen_fittest = demo.population.fittest;
         //While population gets an individual with maximum fitness
-        while (demo.population.fittest < 5) {
+        while (demo.population.fittest < 31) {
             ++demo.generationCount;
 
             //Do selection
@@ -44,17 +49,33 @@ public class SimpleGA {
             System.out.println("Generation: " + demo.generationCount + " Fittest: " + demo.population.fittest);
         }
 
-        System.out.println("\nSolution found in generation " + demo.generationCount);
-        System.out.println("Fitness: "+demo.population.getFittest().fitness);
-        System.out.print("Genes: ");
-        for (int i = 0; i < 5; i++) {
-            System.out.print(demo.population.getFittest().genes[i]);
+        if (demo.population.fittest > demo.compare) {
+            demo.compare = demo.population.fittest;
+            demo.index = demo.generationCount;
+            for (int i = 0; i < 6; i++) {
+                demo.combo[i] = demo.population.getFittest().genes[i];
+            }
         }
-
-        System.out.println("");
-
     }
 
+    if(demo.compare < demo.initial_Gen_fittest) {
+        SimpleGA demo;
+        demo.compare = demo.initial_Gen_fittest;
+        demo.index = 0;
+    }
+
+    System.out.println("\nSolution found in generation " + demo.intex);
+    System.out.println("Fitness: "+demo.compare);
+    System.out.print("Genes: ");
+
+    for(int i = 0; i < 6; i++) {
+        System.out.println(demo.item_backpack[i] + " = " + demo.combo[i]);
+    }
+
+    System.out.println("");
+
+
+}
     //Selection
     void selection() {
 
